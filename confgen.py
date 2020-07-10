@@ -13,9 +13,9 @@ Arguments:
 """
 
 
-args = docopt(usage)
+#args = docopt(usage)
 
-target = args['<file_name>']
+target = 'example-config.yaml'
 
 with open(target) as file:
     config = yaml.full_load(file)

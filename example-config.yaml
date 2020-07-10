@@ -1,40 +1,5 @@
-features:
-  ipsec_policy_based:
-  - peer: 100.64.1.1
-    phase_1:
-      authentication: pre-share
-      encryption: aes
-      group: '2'
-      hash: sha
-      key_number: '0'
-      policy_number: '1'
-    phase_2:
-      crypto_map:
-        map_name: ipsec-crypto-ce1-ce-8
-        sequence_number: '10'
-      outbound_interface: GigabitEthernet0/0
-      protected_networks:
-        acl_number: '100'
-        dest_mask: 255.255.255.0
-        dest_prefix: 10.20.1.0
-        dest_wildcard: 0.0.0.255
-        source_prefix: 10.30.1.0
-        source_wildcard: 0.0.0.255
-      transform_set:
-        name: ipsec-transform-ce1-ce8
-        transforms:
-        - esp-aes
-        - esp-sha-hmac
-    pre_shared_key: ipsec-secret-key-ce1-ce8
-    tunnel_number: '1'
-  prefix-list:
-  - name: my-prefix-inbound
-    statements:
-    - action: permit
-      operator: ge 25
-      prefix: 10.0.20.0/24
-      sequence: '10'
-hostname: CE-RTR-8
+hostname: EXAMPLE-RTR
+
 ip_interfaces:
 - interface_id: GigabitEthernet0/0
   ip_address: 198.51.100.34 255.255.255.248
@@ -42,6 +7,7 @@ ip_interfaces:
   ip_address: 100.64.5.0 255.255.255.255
 - interface_id: GigabitEthernet0/1
   ip_address: 10.20.1.1 255.255.255.0
+
 ip_protocols:
   bgp:
     asn: '65540'
@@ -74,3 +40,41 @@ switching_interfaces:
   trunk:
   - allowed_vlans: 100, 200-300
     interface: G0/1
+
+features:
+  ipsec_policy_based:
+  - peer: 100.64.1.1
+    phase_1:
+      authentication: pre-share
+      encryption: aes
+      group: '2'
+      hash: sha
+      key_number: '0'
+      policy_number: '1'
+    phase_2:
+      crypto_map:
+        map_name: ipsec-crypto-ce1-ce-8
+        sequence_number: '10'
+      outbound_interface: GigabitEthernet0/0
+      protected_networks:
+        acl_number: '100'
+        dest_mask: 255.255.255.0
+        dest_prefix: 10.20.1.0
+        dest_wildcard: 0.0.0.255
+        source_prefix: 10.30.1.0
+        source_wildcard: 0.0.0.255
+      transform_set:
+        name: ipsec-transform-ce1-ce8
+        transforms:
+        - esp-aes
+        - esp-sha-hmac
+    pre_shared_key: ipsec-secret-key-ce1-ce8
+    tunnel_number: '1'
+
+  prefix-list:
+  - name: my-prefix-inbound
+    statements:
+    - action: permit
+      operator: ge 25
+      prefix: 10.0.20.0/24
+      sequence: '10'
